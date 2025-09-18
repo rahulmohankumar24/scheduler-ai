@@ -3,6 +3,8 @@ import { getCampaignByNumber } from "@/app/lib/db";
 import { twiml } from "twilio";
 
 export async function POST(req: Request) {
+
+  
   const formData = await req.formData();
   const fromNumber = formData.get("From") as string;
   const toNumber = formData.get("To") as string;
@@ -11,6 +13,8 @@ export async function POST(req: Request) {
   const campaign = await getCampaignByNumber(toNumber);
 
   const voiceResponse = new twiml.VoiceResponse();
+
+  voiceResponse.say("We are currently open.");
 
   if (!campaign) {
     voiceResponse.say("This number is not recognized.");
