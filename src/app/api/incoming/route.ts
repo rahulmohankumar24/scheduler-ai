@@ -26,10 +26,11 @@ export async function POST(req: Request) {
   });
 
   if (now >= campaign.open_time && now <= campaign.close_time) {
-    voiceResponse.dial(campaign.company_line);
+    voiceResponse.say("We are currently open.");
+    // voiceResponse.dial(campaign.phone_number);
   } else {
     voiceResponse.say("We are currently closed. Connecting you to our AI assistant...");
-    voiceResponse.redirect("https://your-voice-ai-agent-url.com");
+    // voiceResponse.redirect("https://your-voice-ai-agent-url.com");
   }
 
   return new Response(voiceResponse.toString(), {
