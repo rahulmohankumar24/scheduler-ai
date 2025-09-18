@@ -1,15 +1,10 @@
 import { NextResponse } from "next/server";
 import { getCampaignByNumber } from "@/app/lib/db";
 import { twiml } from "twilio";
-import { Pool } from "pg";
-export const runtime = "nodejs";
-export async function POST(req: Request) {
-  
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
 
+export const runtime = "nodejs";
+
+export async function POST(req: Request) {
   const formData = await req.formData();
   const fromNumber = formData.get("From") as string;
   const toNumber = formData.get("To") as string;
@@ -19,8 +14,6 @@ const pool = new Pool({
 
   const voiceResponse = new twiml.VoiceResponse();
 
-  voiceResponse.say("We are currently open.");
-
   if (!campaign) {
     voiceResponse.say("This number is not recognized.");
     return new Response(voiceResponse.toString(), {
@@ -28,7 +21,6 @@ const pool = new Pool({
     });
   }
 
-  // Check working hours
   const now = new Date().toLocaleTimeString("en-US", {
     hour12: false,
     timeZone: campaign.timezone,
