@@ -5,10 +5,7 @@ const isVercel = !!process.env.VERCEL;
 export const pool = new Pool({
   connectionString: isVercel
     ? process.env.POSTGRES_URL   // pooler (Vercel)
-    : process.env.DATABASE_URL,  // direct (local dev)
-  ssl: {
-    rejectUnauthorized: false, // needed for Supabase self-signed certs
-  },
+    : process.env.DATABASE_URL  // direct (local dev
 });
 
 // Fetch a campaign by phone number
