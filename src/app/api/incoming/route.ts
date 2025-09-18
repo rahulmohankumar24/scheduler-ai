@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { getCampaignByNumber } from "@/app/lib/db";
 import { twiml } from "twilio";
-
+import { Pool } from "pg";
+export const runtime = "nodejs";
 export async function POST(req: Request) {
-
   
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
   const formData = await req.formData();
   const fromNumber = formData.get("From") as string;
   const toNumber = formData.get("To") as string;
