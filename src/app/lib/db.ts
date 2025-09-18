@@ -2,7 +2,7 @@ import { Pool } from "pg";
 
 const isVercel = !!process.env.VERCEL;
 
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: isVercel
     ? process.env.POSTGRES_URL   // pooler (Vercel)
     : process.env.DATABASE_URL,  // direct (local dev)
