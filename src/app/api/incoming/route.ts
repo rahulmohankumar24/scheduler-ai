@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { twiml } from "twilio";
+import { log } from "console";
 
 export const runtime = "nodejs";
 
@@ -32,9 +33,11 @@ export async function POST(req: Request) {
   const toNumber = formData.get("To") as string;
 
   // Lookup campaign
+  console.log("Incoming call to:", toNumber, "from:", fromNumber);
   const campaign = await getCampaignByNumber(toNumber);
 
   const voiceResponse = new twiml.VoiceResponse();
+  
 
   if (!campaign) {
     voiceResponse.say("This number is not recognized.");
